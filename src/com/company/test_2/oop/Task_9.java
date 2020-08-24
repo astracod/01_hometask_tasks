@@ -7,6 +7,7 @@ package com.company.test_2.oop;
 1. Слово в массиве !== введенное слово
 2. Сумма букв слова в массиве == сумме букв введенного слова*/
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 public class Task_9 {
@@ -16,45 +17,61 @@ public class Task_9 {
     int k = 0;
 
     public Task_9() {
-        this.oldStr = new String[]{"заметка", "отсечка", "сеточка", "стоечка", "тесачок", "костер", "сектор", "стокер"};
+        this.oldStr = new String[]{"заметка", "отсечка", "сеточка", "стоечка", "тесачок", "костер", "сектор", "стокер", "баа"};
         this.str = "";
     }
 
 
-    public void element(String b) {
-        boolean res = false;
-        boolean res2 = false;
-        boolean res3 = true;
-
+    public void element(String b) throws UnsupportedEncodingException {
+        boolean equalLength = false;
+        boolean stringIdentity = false;
+        boolean identitySymbols = true;
+        boolean eachElement = false;
 
         String[] buf = new String[0];
         for (int i = 0; i < oldStr.length; i++) {
 
             str = oldStr[i];
-            res = objectLength(str, b); // Проверка строк  на соответствие длины
-            if (res) res2 = str.equalsIgnoreCase(b); // Проверка  строк на идентичность
-            if (!res2) res3 = conformity(str, b);// Проверка строк на идентичность символов
-            if (res3) {
-                k++;
-                buf = addStr(buf, str);
-            }
+            equalLength = objectLength(str, b); // Проверка строк  на соответствие длины
 
+            if (equalLength) stringIdentity = str.equalsIgnoreCase(b); // Проверка  строк на идентичность
+            if (!stringIdentity) identitySymbols = conformity(str, b);// Проверка строк на идентичность символов
+            if (identitySymbols) {
+                eachElement = oneElement(str, b);// Проверка строка на соответствие эелементов на сумму байт
+                if (eachElement) {
+                    k++;
+                    buf = addStr(buf, str);
+                }
+            }
         }
 
         bigStr = new String[k];
         bigStr = buf;
-        System.out.println(" Массив с анаграммами : "+Arrays.toString(bigStr));
+        System.out.println(" Массив с анаграммами : " + Arrays.toString(bigStr));
+    }
+
+    //    Проверка строк на соответствие количества символов
+    public boolean oneElement(String a, String b) throws UnsupportedEncodingException {
+
+        int sumA = 0;
+        int sumB = 0;
+        byte[] strA = a.getBytes("KOI8_R");
+        byte[] strB = b.getBytes("KOI8_R");
+        for (int i = 0; i < strA.length; i++) {
+            sumA += strA[i];
+        }
+        for (int i = 0; i < strB.length; i++) {
+            sumB += strB[i];
+        }
+        return sumA == sumB;
     }
 
     //  Проверка на длину сроки, если равная то возвращает true
+
     public boolean objectLength(String a, String b) {
         int l1 = a.length();
         int l2 = b.length();
-        boolean res = false;
-        if (l1 == l2) {
-            return res = true;
-        }
-        return res;
+        return l1 == l2;
     }
 
     // Взвращает true , если в строках одинаковые символы

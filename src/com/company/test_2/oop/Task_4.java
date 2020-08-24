@@ -6,13 +6,9 @@ import java.util.Arrays;
 
 public class Task_4 {
 
-    private int number;
-    private int divider;
     private int[] dividers;
 
     public Task_4() {
-        this.number = number;
-        this.divider = divider;
         this.dividers = new int[0];
     }
 
@@ -25,7 +21,7 @@ public class Task_4 {
     }
 
     public int[] searchDivisors(int number) {
-        divider = 1;
+       int divider = 1;
         for (int i = divider; i <= number; i++) {
             if (number % i == 0 & i > 1) {
                 number = number / i;

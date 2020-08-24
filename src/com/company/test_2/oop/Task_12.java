@@ -28,7 +28,7 @@ public class Task_12 {
 
                 }
             }
-            if (status == false){
+            if (!status){
                 newStr.append(elem);
             }
         }
